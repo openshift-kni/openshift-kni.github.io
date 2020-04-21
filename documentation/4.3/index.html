@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<meta name="author" content="Deployment Integration Team">
+<title>Setting up the environment for an OpenShift installation</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+/* Remove comment around @import statement below when using as a custom stylesheet */
+/*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
+article,aside,details,figcaption,figure,footer,header,hgroup,main,nav,section,summary{display:block}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden],template{display:none}
+script{display:none!important}
+html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}
+a{background:transparent}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+h1{font-size:2em;margin:.67em 0}
+abbr[title]{border-bottom:1px dotted}
+b,strong{font-weight:bold}
+dfn{font-style:italic}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+img{border:0}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+*,*:before,*:after{-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box}
+html,body{font-size:100%}
+body{background:#fff;color:rgba(0,0,0,.8);padding:0;margin:0;font-family:"Noto Serif","DejaVu Serif",serif;font-weight:400;font-style:normal;line-height:1;position:relative;cursor:auto;tab-size:4;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased}
+a:hover{cursor:pointer}
+img,object,embed{max-width:100%;height:auto}
+object,embed{height:100%}
+img{-ms-interpolation-mode:bicubic}
+.left{float:left!important}
+.right{float:right!important}
+.text-left{text-align:left!important}
+.text-right{text-align:right!important}
+.text-center{text-align:center!important}
+.text-justify{text-align:justify!important}
+.hide{display:none}
+img,object,svg{display:inline-block;vertical-align:middle}
+textarea{height:auto;min-height:50px}
+select{width:100%}
+.center{margin-left:auto;margin-right:auto}
+.spread{width:100%}
+p.lead,.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{font-size:1.21875em;line-height:1.6}
+.subheader,.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{line-height:1.45;color:#7a2518;font-weight:400;margin-top:0;margin-bottom:.25em}
+div,dl,dt,dd,ul,ol,li,h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6,pre,form,p,blockquote,th,td{margin:0;padding:0;direction:ltr}
+a{color:#2156a5;text-decoration:underline;line-height:inherit}
+a:hover,a:focus{color:#1d4b8f}
+a img{border:none}
+p{font-family:inherit;font-weight:400;font-size:1em;line-height:1.6;margin-bottom:1.25em;text-rendering:optimizeLegibility}
+p aside{font-size:.875em;line-height:1.35;font-style:italic}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{font-family:"Open Sans","DejaVu Sans",sans-serif;font-weight:300;font-style:normal;color:#ba3925;text-rendering:optimizeLegibility;margin-top:1em;margin-bottom:.5em;line-height:1.0125em}
+h1 small,h2 small,h3 small,#toctitle small,.sidebarblock>.content>.title small,h4 small,h5 small,h6 small{font-size:60%;color:#e99b8f;line-height:0}
+h1{font-size:2.125em}
+h2{font-size:1.6875em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.375em}
+h4,h5{font-size:1.125em}
+h6{font-size:1em}
+hr{border:solid #ddddd8;border-width:1px 0 0;clear:both;margin:1.25em 0 1.1875em;height:0}
+em,i{font-style:italic;line-height:inherit}
+strong,b{font-weight:bold;line-height:inherit}
+small{font-size:60%;line-height:inherit}
+code{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;color:rgba(0,0,0,.9)}
+ul,ol,dl{font-size:1em;line-height:1.6;margin-bottom:1.25em;list-style-position:outside;font-family:inherit}
+ul,ol{margin-left:1.5em}
+ul li ul,ul li ol{margin-left:1.25em;margin-bottom:0;font-size:1em}
+ul.square li ul,ul.circle li ul,ul.disc li ul{list-style:inherit}
+ul.square{list-style-type:square}
+ul.circle{list-style-type:circle}
+ul.disc{list-style-type:disc}
+ol li ul,ol li ol{margin-left:1.25em;margin-bottom:0}
+dl dt{margin-bottom:.3125em;font-weight:bold}
+dl dd{margin-bottom:1.25em}
+abbr,acronym{text-transform:uppercase;font-size:90%;color:rgba(0,0,0,.8);border-bottom:1px dotted #ddd;cursor:help}
+abbr{text-transform:none}
+blockquote{margin:0 0 1.25em;padding:.5625em 1.25em 0 1.1875em;border-left:1px solid #ddd}
+blockquote cite{display:block;font-size:.9375em;color:rgba(0,0,0,.6)}
+blockquote cite:before{content:"\2014 \0020"}
+blockquote cite a,blockquote cite a:visited{color:rgba(0,0,0,.6)}
+blockquote,blockquote p{line-height:1.6;color:rgba(0,0,0,.85)}
+@media only screen and (min-width:768px){h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2}
+h1{font-size:2.75em}
+h2{font-size:2.3125em}
+h3,#toctitle,.sidebarblock>.content>.title{font-size:1.6875em}
+h4{font-size:1.4375em}}
+table{background:#fff;margin-bottom:1.25em;border:solid 1px #dedede}
+table thead,table tfoot{background:#f7f8f7;font-weight:bold}
+table thead tr th,table thead tr td,table tfoot tr th,table tfoot tr td{padding:.5em .625em .625em;font-size:inherit;color:rgba(0,0,0,.8);text-align:left}
+table tr th,table tr td{padding:.5625em .625em;font-size:inherit;color:rgba(0,0,0,.8)}
+table tr.even,table tr.alt,table tr:nth-of-type(even){background:#f8f8f7}
+table thead tr th,table tfoot tr th,table tbody tr td,table tr td,table tfoot tr td{display:table-cell;line-height:1.6}
+h1,h2,h3,#toctitle,.sidebarblock>.content>.title,h4,h5,h6{line-height:1.2;word-spacing:-.05em}
+h1 strong,h2 strong,h3 strong,#toctitle strong,.sidebarblock>.content>.title strong,h4 strong,h5 strong,h6 strong{font-weight:400}
+.clearfix:before,.clearfix:after,.float-group:before,.float-group:after{content:" ";display:table}
+.clearfix:after,.float-group:after{clear:both}
+*:not(pre)>code{font-size:.9375em;font-style:normal!important;letter-spacing:0;padding:.1em .5ex;word-spacing:-.15em;background-color:#f7f7f8;-webkit-border-radius:4px;border-radius:4px;line-height:1.45;text-rendering:optimizeSpeed;word-wrap:break-word}
+*:not(pre)>code.nobreak{word-wrap:normal}
+*:not(pre)>code.nowrap{white-space:nowrap}
+pre,pre>code{line-height:1.45;color:rgba(0,0,0,.9);font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;font-weight:400;text-rendering:optimizeSpeed}
+em em{font-style:normal}
+strong strong{font-weight:400}
+.keyseq{color:rgba(51,51,51,.8)}
+kbd{font-family:"Droid Sans Mono","DejaVu Sans Mono",monospace;display:inline-block;color:rgba(0,0,0,.8);font-size:.65em;line-height:1.45;background-color:#f7f7f7;border:1px solid #ccc;-webkit-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em white inset;box-shadow:0 1px 0 rgba(0,0,0,.2),0 0 0 .1em #fff inset;margin:0 .15em;padding:.2em .5em;vertical-align:middle;position:relative;top:-.1em;white-space:nowrap}
+.keyseq kbd:first-child{margin-left:0}
+.keyseq kbd:last-child{margin-right:0}
+.menuseq,.menuref{color:#000}
+.menuseq b:not(.caret),.menuref{font-weight:inherit}
+.menuseq{word-spacing:-.02em}
+.menuseq b.caret{font-size:1.25em;line-height:.8}
+.menuseq i.caret{font-weight:bold;text-align:center;width:.45em}
+b.button:before,b.button:after{position:relative;top:-1px;font-weight:400}
+b.button:before{content:"[";padding:0 3px 0 2px}
+b.button:after{content:"]";padding:0 2px 0 3px}
+p a>code:hover{color:rgba(0,0,0,.9)}
+#header,#content,#footnotes,#footer{width:100%;margin-left:auto;margin-right:auto;margin-top:0;margin-bottom:0;max-width:62.5em;*zoom:1;position:relative;padding-left:.9375em;padding-right:.9375em}
+#header:before,#header:after,#content:before,#content:after,#footnotes:before,#footnotes:after,#footer:before,#footer:after{content:" ";display:table}
+#header:after,#content:after,#footnotes:after,#footer:after{clear:both}
+#content{margin-top:1.25em}
+#content:before{content:none}
+#header>h1:first-child{color:rgba(0,0,0,.85);margin-top:2.25rem;margin-bottom:0}
+#header>h1:first-child+#toc{margin-top:8px;border-top:1px solid #ddddd8}
+#header>h1:only-child,body.toc2 #header>h1:nth-last-child(2){border-bottom:1px solid #ddddd8;padding-bottom:8px}
+#header .details{border-bottom:1px solid #ddddd8;line-height:1.45;padding-top:.25em;padding-bottom:.25em;padding-left:.25em;color:rgba(0,0,0,.6);display:-ms-flexbox;display:-webkit-flex;display:flex;-ms-flex-flow:row wrap;-webkit-flex-flow:row wrap;flex-flow:row wrap}
+#header .details span:first-child{margin-left:-.125em}
+#header .details span.email a{color:rgba(0,0,0,.85)}
+#header .details br{display:none}
+#header .details br+span:before{content:"\00a0\2013\00a0"}
+#header .details br+span.author:before{content:"\00a0\22c5\00a0";color:rgba(0,0,0,.85)}
+#header .details br+span#revremark:before{content:"\00a0|\00a0"}
+#header #revnumber{text-transform:capitalize}
+#header #revnumber:after{content:"\00a0"}
+#content>h1:first-child:not([class]){color:rgba(0,0,0,.85);border-bottom:1px solid #ddddd8;padding-bottom:8px;margin-top:0;padding-top:1rem;margin-bottom:1.25rem}
+#toc{border-bottom:1px solid #efefed;padding-bottom:.5em}
+#toc>ul{margin-left:.125em}
+#toc ul.sectlevel0>li>a{font-style:italic}
+#toc ul.sectlevel0 ul.sectlevel1{margin:.5em 0}
+#toc ul{font-family:"Open Sans","DejaVu Sans",sans-serif;list-style-type:none}
+#toc li{line-height:1.3334;margin-top:.3334em}
+#toc a{text-decoration:none}
+#toc a:active{text-decoration:underline}
+#toctitle{color:#7a2518;font-size:1.2em}
+@media only screen and (min-width:768px){#toctitle{font-size:1.375em}
+body.toc2{padding-left:15em;padding-right:0}
+#toc.toc2{margin-top:0!important;background-color:#f8f8f7;position:fixed;width:15em;left:0;top:0;border-right:1px solid #efefed;border-top-width:0!important;border-bottom-width:0!important;z-index:1000;padding:1.25em 1em;height:100%;overflow:auto}
+#toc.toc2 #toctitle{margin-top:0;margin-bottom:.8rem;font-size:1.2em}
+#toc.toc2>ul{font-size:.9em;margin-bottom:0}
+#toc.toc2 ul ul{margin-left:0;padding-left:1em}
+#toc.toc2 ul.sectlevel0 ul.sectlevel1{padding-left:0;margin-top:.5em;margin-bottom:.5em}
+body.toc2.toc-right{padding-left:0;padding-right:15em}
+body.toc2.toc-right #toc.toc2{border-right-width:0;border-left:1px solid #efefed;left:auto;right:0}}
+@media only screen and (min-width:1280px){body.toc2{padding-left:20em;padding-right:0}
+#toc.toc2{width:20em}
+#toc.toc2 #toctitle{font-size:1.375em}
+#toc.toc2>ul{font-size:.95em}
+#toc.toc2 ul ul{padding-left:1.25em}
+body.toc2.toc-right{padding-left:0;padding-right:20em}}
+#content #toc{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+#content #toc>:first-child{margin-top:0}
+#content #toc>:last-child{margin-bottom:0}
+#footer{max-width:100%;background-color:rgba(0,0,0,.8);padding:1.25em}
+#footer-text{color:rgba(255,255,255,.8);line-height:1.44}
+.sect1{padding-bottom:.625em}
+@media only screen and (min-width:768px){.sect1{padding-bottom:1.25em}}
+.sect1+.sect1{border-top:1px solid #efefed}
+#content h1>a.anchor,h2>a.anchor,h3>a.anchor,#toctitle>a.anchor,.sidebarblock>.content>.title>a.anchor,h4>a.anchor,h5>a.anchor,h6>a.anchor{position:absolute;z-index:1001;width:1.5ex;margin-left:-1.5ex;display:block;text-decoration:none!important;visibility:hidden;text-align:center;font-weight:400}
+#content h1>a.anchor:before,h2>a.anchor:before,h3>a.anchor:before,#toctitle>a.anchor:before,.sidebarblock>.content>.title>a.anchor:before,h4>a.anchor:before,h5>a.anchor:before,h6>a.anchor:before{content:"\00A7";font-size:.85em;display:block;padding-top:.1em}
+#content h1:hover>a.anchor,#content h1>a.anchor:hover,h2:hover>a.anchor,h2>a.anchor:hover,h3:hover>a.anchor,#toctitle:hover>a.anchor,.sidebarblock>.content>.title:hover>a.anchor,h3>a.anchor:hover,#toctitle>a.anchor:hover,.sidebarblock>.content>.title>a.anchor:hover,h4:hover>a.anchor,h4>a.anchor:hover,h5:hover>a.anchor,h5>a.anchor:hover,h6:hover>a.anchor,h6>a.anchor:hover{visibility:visible}
+#content h1>a.link,h2>a.link,h3>a.link,#toctitle>a.link,.sidebarblock>.content>.title>a.link,h4>a.link,h5>a.link,h6>a.link{color:#ba3925;text-decoration:none}
+#content h1>a.link:hover,h2>a.link:hover,h3>a.link:hover,#toctitle>a.link:hover,.sidebarblock>.content>.title>a.link:hover,h4>a.link:hover,h5>a.link:hover,h6>a.link:hover{color:#a53221}
+.audioblock,.imageblock,.literalblock,.listingblock,.stemblock,.videoblock{margin-bottom:1.25em}
+.admonitionblock td.content>.title,.audioblock>.title,.exampleblock>.title,.imageblock>.title,.listingblock>.title,.literalblock>.title,.stemblock>.title,.openblock>.title,.paragraph>.title,.quoteblock>.title,table.tableblock>.title,.verseblock>.title,.videoblock>.title,.dlist>.title,.olist>.title,.ulist>.title,.qlist>.title,.hdlist>.title{text-rendering:optimizeLegibility;text-align:left;font-family:"Noto Serif","DejaVu Serif",serif;font-size:1rem;font-style:italic}
+table.tableblock>caption.title{white-space:nowrap;overflow:visible;max-width:0}
+.paragraph.lead>p,#preamble>.sectionbody>.paragraph:first-of-type p{color:rgba(0,0,0,.85)}
+table.tableblock #preamble>.sectionbody>.paragraph:first-of-type p{font-size:inherit}
+.admonitionblock>table{border-collapse:separate;border:0;background:none;width:100%}
+.admonitionblock>table td.icon{text-align:center;width:80px}
+.admonitionblock>table td.icon img{max-width:initial}
+.admonitionblock>table td.icon .title{font-weight:bold;font-family:"Open Sans","DejaVu Sans",sans-serif;text-transform:uppercase}
+.admonitionblock>table td.content{padding-left:1.125em;padding-right:1.25em;border-left:1px solid #ddddd8;color:rgba(0,0,0,.6)}
+.admonitionblock>table td.content>:last-child>:last-child{margin-bottom:0}
+.exampleblock>.content{border-style:solid;border-width:1px;border-color:#e6e6e6;margin-bottom:1.25em;padding:1.25em;background:#fff;-webkit-border-radius:4px;border-radius:4px}
+.exampleblock>.content>:first-child{margin-top:0}
+.exampleblock>.content>:last-child{margin-bottom:0}
+.sidebarblock{border-style:solid;border-width:1px;border-color:#e0e0dc;margin-bottom:1.25em;padding:1.25em;background:#f8f8f7;-webkit-border-radius:4px;border-radius:4px}
+.sidebarblock>:first-child{margin-top:0}
+.sidebarblock>:last-child{margin-bottom:0}
+.sidebarblock>.content>.title{color:#7a2518;margin-top:0;text-align:center}
+.exampleblock>.content>:last-child>:last-child,.exampleblock>.content .olist>ol>li:last-child>:last-child,.exampleblock>.content .ulist>ul>li:last-child>:last-child,.exampleblock>.content .qlist>ol>li:last-child>:last-child,.sidebarblock>.content>:last-child>:last-child,.sidebarblock>.content .olist>ol>li:last-child>:last-child,.sidebarblock>.content .ulist>ul>li:last-child>:last-child,.sidebarblock>.content .qlist>ol>li:last-child>:last-child{margin-bottom:0}
+.literalblock pre,.listingblock pre:not(.highlight),.listingblock pre[class="highlight"],.listingblock pre[class^="highlight "],.listingblock pre.CodeRay,.listingblock pre.prettyprint{background:#f7f7f8}
+.sidebarblock .literalblock pre,.sidebarblock .listingblock pre:not(.highlight),.sidebarblock .listingblock pre[class="highlight"],.sidebarblock .listingblock pre[class^="highlight "],.sidebarblock .listingblock pre.CodeRay,.sidebarblock .listingblock pre.prettyprint{background:#f2f1f1}
+.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{-webkit-border-radius:4px;border-radius:4px;word-wrap:break-word;padding:1em;font-size:.8125em}
+.literalblock pre.nowrap,.literalblock pre[class].nowrap,.listingblock pre.nowrap,.listingblock pre[class].nowrap{overflow-x:auto;white-space:pre;word-wrap:normal}
+@media only screen and (min-width:768px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:.90625em}}
+@media only screen and (min-width:1280px){.literalblock pre,.literalblock pre[class],.listingblock pre,.listingblock pre[class]{font-size:1em}}
+.literalblock.output pre{color:#f7f7f8;background-color:rgba(0,0,0,.9)}
+.listingblock pre.highlightjs{padding:0}
+.listingblock pre.highlightjs>code{padding:1em;-webkit-border-radius:4px;border-radius:4px}
+.listingblock pre.prettyprint{border-width:0}
+.listingblock>.content{position:relative}
+.listingblock code[data-lang]:before{display:none;content:attr(data-lang);position:absolute;font-size:.75em;top:.425rem;right:.5rem;line-height:1;text-transform:uppercase;color:#999}
+.listingblock:hover code[data-lang]:before{display:block}
+.listingblock.terminal pre .command:before{content:attr(data-prompt);padding-right:.5em;color:#999}
+.listingblock.terminal pre .command:not([data-prompt]):before{content:"$"}
+table.pyhltable{border-collapse:separate;border:0;margin-bottom:0;background:none}
+table.pyhltable td{vertical-align:top;padding-top:0;padding-bottom:0;line-height:1.45}
+table.pyhltable td.code{padding-left:.75em;padding-right:0}
+pre.pygments .lineno,table.pyhltable td:not(.code){color:#999;padding-left:0;padding-right:.5em;border-right:1px solid #ddddd8}
+pre.pygments .lineno{display:inline-block;margin-right:.25em}
+table.pyhltable .linenodiv{background:none!important;padding-right:0!important}
+.quoteblock{margin:0 1em 1.25em 1.5em;display:table}
+.quoteblock>.title{margin-left:-1.5em;margin-bottom:.75em}
+.quoteblock blockquote,.quoteblock blockquote p{color:rgba(0,0,0,.85);font-size:1.15rem;line-height:1.75;word-spacing:.1em;letter-spacing:0;font-style:italic;text-align:justify}
+.quoteblock blockquote{margin:0;padding:0;border:0}
+.quoteblock blockquote:before{content:"\201c";float:left;font-size:2.75em;font-weight:bold;line-height:.6em;margin-left:-.6em;color:#7a2518;text-shadow:0 1px 2px rgba(0,0,0,.1)}
+.quoteblock blockquote>.paragraph:last-child p{margin-bottom:0}
+.quoteblock .attribution{margin-top:.5em;margin-right:.5ex;text-align:right}
+.quoteblock .quoteblock{margin-left:0;margin-right:0;padding:.5em 0;border-left:3px solid rgba(0,0,0,.6)}
+.quoteblock .quoteblock blockquote{padding:0 0 0 .75em}
+.quoteblock .quoteblock blockquote:before{display:none}
+.verseblock{margin:0 1em 1.25em 1em}
+.verseblock pre{font-family:"Open Sans","DejaVu Sans",sans;font-size:1.15rem;color:rgba(0,0,0,.85);font-weight:300;text-rendering:optimizeLegibility}
+.verseblock pre strong{font-weight:400}
+.verseblock .attribution{margin-top:1.25rem;margin-left:.5ex}
+.quoteblock .attribution,.verseblock .attribution{font-size:.9375em;line-height:1.45;font-style:italic}
+.quoteblock .attribution br,.verseblock .attribution br{display:none}
+.quoteblock .attribution cite,.verseblock .attribution cite{display:block;letter-spacing:-.025em;color:rgba(0,0,0,.6)}
+.quoteblock.abstract{margin:0 0 1.25em 0;display:block}
+.quoteblock.abstract blockquote,.quoteblock.abstract blockquote p{text-align:left;word-spacing:0}
+.quoteblock.abstract blockquote:before,.quoteblock.abstract blockquote p:first-of-type:before{display:none}
+table.tableblock{max-width:100%;border-collapse:separate}
+table.tableblock td>.paragraph:last-child p>p:last-child,table.tableblock th>p:last-child,table.tableblock td>p:last-child{margin-bottom:0}
+table.tableblock,th.tableblock,td.tableblock{border:0 solid #dedede}
+table.grid-all>thead>tr>.tableblock,table.grid-all>tbody>tr>.tableblock{border-width:0 1px 1px 0}
+table.grid-all>tfoot>tr>.tableblock{border-width:1px 1px 0 0}
+table.grid-cols>*>tr>.tableblock{border-width:0 1px 0 0}
+table.grid-rows>thead>tr>.tableblock,table.grid-rows>tbody>tr>.tableblock{border-width:0 0 1px 0}
+table.grid-rows>tfoot>tr>.tableblock{border-width:1px 0 0 0}
+table.grid-all>*>tr>.tableblock:last-child,table.grid-cols>*>tr>.tableblock:last-child{border-right-width:0}
+table.grid-all>tbody>tr:last-child>.tableblock,table.grid-all>thead:last-child>tr>.tableblock,table.grid-rows>tbody>tr:last-child>.tableblock,table.grid-rows>thead:last-child>tr>.tableblock{border-bottom-width:0}
+table.frame-all{border-width:1px}
+table.frame-sides{border-width:0 1px}
+table.frame-topbot{border-width:1px 0}
+th.halign-left,td.halign-left{text-align:left}
+th.halign-right,td.halign-right{text-align:right}
+th.halign-center,td.halign-center{text-align:center}
+th.valign-top,td.valign-top{vertical-align:top}
+th.valign-bottom,td.valign-bottom{vertical-align:bottom}
+th.valign-middle,td.valign-middle{vertical-align:middle}
+table thead th,table tfoot th{font-weight:bold}
+tbody tr th{display:table-cell;line-height:1.6;background:#f7f8f7}
+tbody tr th,tbody tr th p,tfoot tr th,tfoot tr th p{color:rgba(0,0,0,.8);font-weight:bold}
+p.tableblock>code:only-child{background:none;padding:0}
+p.tableblock{font-size:1em}
+td>div.verse{white-space:pre}
+ol{margin-left:1.75em}
+ul li ol{margin-left:1.5em}
+dl dd{margin-left:1.125em}
+dl dd:last-child,dl dd:last-child>:last-child{margin-bottom:0}
+ol>li p,ul>li p,ul dd,ol dd,.olist .olist,.ulist .ulist,.ulist .olist,.olist .ulist{margin-bottom:.625em}
+ul.checklist,ul.none,ol.none,ul.no-bullet,ol.no-bullet,ol.unnumbered,ul.unstyled,ol.unstyled{list-style-type:none}
+ul.no-bullet,ol.no-bullet,ol.unnumbered{margin-left:.625em}
+ul.unstyled,ol.unstyled{margin-left:0}
+ul.checklist{margin-left:.625em}
+ul.checklist li>p:first-child>.fa-square-o:first-child,ul.checklist li>p:first-child>.fa-check-square-o:first-child{width:1.25em;font-size:.8em;position:relative;bottom:.125em}
+ul.checklist li>p:first-child>input[type="checkbox"]:first-child{margin-right:.25em}
+ul.inline{margin:0 auto .625em auto;margin-left:-1.375em;margin-right:0;padding:0;list-style:none;overflow:hidden}
+ul.inline>li{list-style:none;float:left;margin-left:1.375em;display:block}
+ul.inline>li>*{display:block}
+.unstyled dl dt{font-weight:400;font-style:normal}
+ol.arabic{list-style-type:decimal}
+ol.decimal{list-style-type:decimal-leading-zero}
+ol.loweralpha{list-style-type:lower-alpha}
+ol.upperalpha{list-style-type:upper-alpha}
+ol.lowerroman{list-style-type:lower-roman}
+ol.upperroman{list-style-type:upper-roman}
+ol.lowergreek{list-style-type:lower-greek}
+.hdlist>table,.colist>table{border:0;background:none}
+.hdlist>table>tbody>tr,.colist>table>tbody>tr{background:none}
+td.hdlist1,td.hdlist2{vertical-align:top;padding:0 .625em}
+td.hdlist1{font-weight:bold;padding-bottom:1.25em}
+.literalblock+.colist,.listingblock+.colist{margin-top:-.5em}
+.colist>table tr>td:first-of-type{padding:.4em .75em 0 .75em;line-height:1;vertical-align:top}
+.colist>table tr>td:first-of-type img{max-width:initial}
+.colist>table tr>td:last-of-type{padding:.25em 0}
+.thumb,.th{line-height:0;display:inline-block;border:solid 4px #fff;-webkit-box-shadow:0 0 0 1px #ddd;box-shadow:0 0 0 1px #ddd}
+.imageblock.left,.imageblock[style*="float: left"]{margin:.25em .625em 1.25em 0}
+.imageblock.right,.imageblock[style*="float: right"]{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+a.image{text-decoration:none;display:inline-block}
+a.image object{pointer-events:none}
+sup.footnote,sup.footnoteref{font-size:.875em;position:static;vertical-align:super}
+sup.footnote a,sup.footnoteref a{text-decoration:none}
+sup.footnote a:active,sup.footnoteref a:active{text-decoration:underline}
+#footnotes{padding-top:.75em;padding-bottom:.75em;margin-bottom:.625em}
+#footnotes hr{width:20%;min-width:6.25em;margin:-.25em 0 .75em 0;border-width:1px 0 0 0}
+#footnotes .footnote{padding:0 .375em 0 .225em;line-height:1.3334;font-size:.875em;margin-left:1.2em;text-indent:-1.05em;margin-bottom:.2em}
+#footnotes .footnote a:first-of-type{font-weight:bold;text-decoration:none}
+#footnotes .footnote:last-of-type{margin-bottom:0}
+#content #footnotes{margin-top:-.625em;margin-bottom:0;padding:.75em 0}
+.gist .file-data>table{border:0;background:#fff;width:100%;margin-bottom:0}
+.gist .file-data>table td.line-data{width:99%}
+div.unbreakable{page-break-inside:avoid}
+.big{font-size:larger}
+.small{font-size:smaller}
+.underline{text-decoration:underline}
+.overline{text-decoration:overline}
+.line-through{text-decoration:line-through}
+.aqua{color:#00bfbf}
+.aqua-background{background-color:#00fafa}
+.black{color:#000}
+.black-background{background-color:#000}
+.blue{color:#0000bf}
+.blue-background{background-color:#0000fa}
+.fuchsia{color:#bf00bf}
+.fuchsia-background{background-color:#fa00fa}
+.gray{color:#606060}
+.gray-background{background-color:#7d7d7d}
+.green{color:#006000}
+.green-background{background-color:#007d00}
+.lime{color:#00bf00}
+.lime-background{background-color:#00fa00}
+.maroon{color:#600000}
+.maroon-background{background-color:#7d0000}
+.navy{color:#000060}
+.navy-background{background-color:#00007d}
+.olive{color:#606000}
+.olive-background{background-color:#7d7d00}
+.purple{color:#600060}
+.purple-background{background-color:#7d007d}
+.red{color:#bf0000}
+.red-background{background-color:#fa0000}
+.silver{color:#909090}
+.silver-background{background-color:#bcbcbc}
+.teal{color:#006060}
+.teal-background{background-color:#007d7d}
+.white{color:#bfbfbf}
+.white-background{background-color:#fafafa}
+.yellow{color:#bfbf00}
+.yellow-background{background-color:#fafa00}
+span.icon>.fa{cursor:default}
+a span.icon>.fa{cursor:inherit}
+.admonitionblock td.icon [class^="fa icon-"]{font-size:2.5em;text-shadow:1px 1px 2px rgba(0,0,0,.5);cursor:default}
+.admonitionblock td.icon .icon-note:before{content:"\f05a";color:#19407c}
+.admonitionblock td.icon .icon-tip:before{content:"\f0eb";text-shadow:1px 1px 2px rgba(155,155,0,.8);color:#111}
+.admonitionblock td.icon .icon-warning:before{content:"\f071";color:#bf6900}
+.admonitionblock td.icon .icon-caution:before{content:"\f06d";color:#bf3400}
+.admonitionblock td.icon .icon-important:before{content:"\f06a";color:#bf0000}
+.conum[data-value]{display:inline-block;color:#fff!important;background-color:rgba(0,0,0,.8);-webkit-border-radius:100px;border-radius:100px;text-align:center;font-size:.75em;width:1.67em;height:1.67em;line-height:1.67em;font-family:"Open Sans","DejaVu Sans",sans-serif;font-style:normal;font-weight:bold}
+.conum[data-value] *{color:#fff!important}
+.conum[data-value]+b{display:none}
+.conum[data-value]:after{content:attr(data-value)}
+pre .conum[data-value]{position:relative;top:-.125em}
+b.conum *{color:inherit!important}
+.conum:not([data-value]):empty{display:none}
+dt,th.tableblock,td.content,div.footnote{text-rendering:optimizeLegibility}
+h1,h2,p,td.content,span.alt{letter-spacing:-.01em}
+p strong,td.content strong,div.footnote strong{letter-spacing:-.005em}
+p,blockquote,dt,td.content,span.alt{font-size:1.0625rem}
+p{margin-bottom:1.25rem}
+.sidebarblock p,.sidebarblock dt,.sidebarblock td.content,p.tableblock{font-size:1em}
+.exampleblock>.content{background-color:#fffef7;border-color:#e0e0dc;-webkit-box-shadow:0 1px 4px #e0e0dc;box-shadow:0 1px 4px #e0e0dc}
+.print-only{display:none!important}
+@media print{@page{margin:1.25cm .75cm}
+*{-webkit-box-shadow:none!important;box-shadow:none!important;text-shadow:none!important}
+a{color:inherit!important;text-decoration:underline!important}
+a.bare,a[href^="#"],a[href^="mailto:"]{text-decoration:none!important}
+a[href^="http:"]:not(.bare):after,a[href^="https:"]:not(.bare):after{content:"(" attr(href) ")";display:inline-block;font-size:.875em;padding-left:.25em}
+abbr[title]:after{content:" (" attr(title) ")"}
+pre,blockquote,tr,img,object,svg{page-break-inside:avoid}
+thead{display:table-header-group}
+svg{max-width:100%}
+p,blockquote,dt,td.content{font-size:1em;orphans:3;widows:3}
+h2,h3,#toctitle,.sidebarblock>.content>.title{page-break-after:avoid}
+#toc,.sidebarblock,.exampleblock>.content{background:none!important}
+#toc{border-bottom:1px solid #ddddd8!important;padding-bottom:0!important}
+.sect1{padding-bottom:0!important}
+.sect1+.sect1{border:0!important}
+#header>h1:first-child{margin-top:1.25rem}
+body.book #header{text-align:center}
+body.book #header>h1:first-child{border:0!important;margin:2.5em 0 1em 0}
+body.book #header .details{border:0!important;display:block;padding:0!important}
+body.book #header .details span:first-child{margin-left:0!important}
+body.book #header .details br{display:block}
+body.book #header .details br+span:before{content:none!important}
+body.book #toc{border:0!important;text-align:left!important;padding:0!important;margin:0!important}
+body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-break-before:always}
+.listingblock code[data-lang]:before{display:block}
+#footer{background:none!important;padding:0 .9375em}
+#footer-text{color:rgba(0,0,0,.6)!important;font-size:.9em}
+.hide-on-print{display:none!important}
+.print-only{display:block!important}
+.hide-for-print{display:none!important}
+.show-for-print{display:inherit!important}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+</head>
+<body id="ipi-install-installation-workflow" class="book">
+<div id="header">
+<h1>Setting up the environment for an OpenShift installation</h1>
+<div class="details">
+<span id="author" class="author">Deployment Integration Team</span><br>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle"></div>
+<ul class="sectlevel1">
+<li><a href="#creating-dns-records-on-a-dns-server-option1_ipi-install-installation-workflow">Creating DNS records on a DNS server (Option 1)</a></li>
+<li><a href="#creating-dns-records-using-dnsmasq-option2_ipi-install-installation-workflow">Creating DNS records using dnsmasq (Option 2)</a></li>
+<li><a href="#creating-dhcp-reservations-option1_ipi-install-installation-workflow">Creating DHCP reservations (Option 1)</a></li>
+<li><a href="#creating-dhcp-reservations-using-dnsmasq-option2_ipi-install-installation-workflow">Creating DHCP reservations using dnsmasq (Option 2)</a></li>
+<li><a href="#installing-rhel-on-the-provision-node_ipi-install-installation-workflow">Installing RHEL on the provision node</a></li>
+<li><a href="#preparing-the-provision-node-for-openshift-install_ipi-install-installation-workflow">Preparing the provision node for {product-title} installation</a></li>
+<li><a href="#retrieving-the-openshift-installer-development_ipi-install-installation-workflow">Retrieving the OpenShift installer (Development)</a>
+<ul class="sectlevel2">
+<li><a href="#choosing-an-openshift-installer-release-from-ci-development_ipi-install-installation-workflow">Choosing an OpenShift installer release from CI (Development)</a></li>
+<li><a href="#choosing-the-latest-openshift-installer-development_ipi-install-installation-workflow">Choosing the latest OpenShift installer (Development)</a></li>
+<li><a href="#extracting-the-installer-development_ipi-install-installation-workflow">Extracting the installer (Development)</a></li>
+</ul>
+</li>
+<li><a href="#retrieving-the-openshift-installer_ipi-install-installation-workflow">Retrieving the {product-title} installer</a>
+<ul class="sectlevel2">
+<li><a href="#extracting-the-openshift-installer_ipi-install-installation-workflow">Extracting the {product-title} installer</a></li>
+<li><a href="#ipi-install-creating-an rhcos-images-cache.adoc_ipi-install-installation-workflow">Creating an RHCOS images cache (Optional)</a></li>
+</ul>
+</li>
+<li><a href="#configuring-the-install-config-file_ipi-install-installation-workflow">Configuring the <code>install-config</code> file</a></li>
+<li><a href="#configuring-the-metal3-config-file_ipi-install-installation-workflow">Configuring the <code>metal3-config</code> file ({product-title} 4.3 only)</a></li>
+<li><a href="#creating-the-openshift-manifests_ipi-install-installation-workflow">Creating the {product-title} manifests</a></li>
+<li><a href="#additional-install-config-parameters_ipi-install-installation-workflow">Additional <code>install-config</code> parameters</a></li>
+<li><a href="#validation-checklist-for-installation_ipi-install-installation-workflow">Validation checklist for installation</a></li>
+<li><a href="#deploying-routers-on-worker-nodes_ipi-install-installation-workflow">Deploying routers on worker nodes</a></li>
+<li><a href="#deploying-the-cluster-via-the-openshift-installer-ipi-install-installation-workflow">Deploying the cluster via the {product-title} installer</a></li>
+<li><a href="#backing-up-the-cluster-configuration_ipi-install-installation-workflow">Backing up the cluster configuration</a></li>
+<li><a href="#preparing-the-provisioner-node-to-be-deployed-as-a-worker-node_ipi-install-installation-workflow">Preparing the provisioner node to be deployed as a worker node</a></li>
+<li><a href="#appending-dns-records-for-the worker-2-(old provisioner)-on-a-DNS-server-option1_ipi-install-installation-workflow">Appending DNS records for the worker-2 (old provisioner) on a DNS server (Option 1)</a></li>
+<li><a href="#appending-dns-records-for-the worker-2-(old provisioner)-using-dnsmasq-option2_ipi-install-installation-workflow">Appending DNS records for the worker-2 (old provisioner) using dnsmasq (Option 2)</a></li>
+<li><a href="#creating-dhcp-reservations-for-the worker-2-(old provisioner)-on-a-DHCP-server-option1_ipi-install-installation-workflow">Creating DHCP reservations for the worker-2 (old provisioner) on a DHCP server (Option 1)</a></li>
+<li><a href="#creating-dhcp-reservations-for-the worker-2-(old provisioner)-using-dnsmasq-option2_ipi-install-installation-workflow">Creating DHCP reservations for the worker-2 (old provisioner) using dnsmasq (Option 2)</a></li>
+<li><a href="#deploying-the-provisioner-node-as-a-worker-node-using-metal3_ipi-install-installation-workflow">Deploying the provisioner node as a worker node using Metal3</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>After an environment has been prepared according to the documented prerequisites, the installation process is the same as other IPI-based platforms.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-dns-records-on-a-dns-server-option1_ipi-install-installation-workflow">Creating DNS records on a DNS server (Option 1)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use Option 1 if access to the appropriate DNS server for the baremetal network is accessible or a request
+to your network admin to create the DNS records is an option.
+If this is not an option, skip this section and go to section Create DNS records using dnsmasq (Option 2).</p>
+</div>
+<div class="paragraph">
+<p>Create a subzone with the name of the cluster that is going to be used on your domain.
+In our example, the domain used is <code>example.com</code> and the cluster name used is <code>openshift</code>.
+Make sure to change these according to your environment specifics.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Login to the DNS server using <code>ssh</code>.</p>
+</li>
+<li>
+<p>Suspend updates to all dynamic zones: <code>rndc freeze</code>.</p>
+</li>
+<li>
+<p>Edit <code>/var/named/dynamic/example.com</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">$ORIGIN openshift.example.com.
+$TTL 300        ; 5 minutes
+@  IN  SOA  dns1.example.com.  hostmaster.example.com. (
+       2001062501  ; serial
+       21600       ; refresh after 6 hours
+       3600        ; retry after 1 hour
+       604800      ; expire after 1 week
+       86400 )     ; minimum TTL of 1 day
+;
+api                     A       &lt;api-ip&gt;
+ns1                     A       &lt;dns-vip-ip&gt;
+$ORIGIN apps.openshift.example.com.
+*                       A       &lt;wildcard-ingress-lb-ip&gt;
+$ORIGIN openshift.example.com.
+provisioner             A       &lt;NIC2-ip-of-provision&gt;
+openshift-master-0      A       &lt;NIC2-ip-of-openshift-master-0&gt;
+openshift-master-1      A       &lt;NIC2-ip-of-openshift-master-1&gt;
+openshift-master-2      A       &lt;NIC2-ip-of-openshift-master-2&gt;
+openshift-worker-0      A       &lt;NIC2-ip-of-openshift-worker-0&gt;
+openshift-worker-1      A       &lt;NIC2-ip-of-openshift-worker-1&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Increase the <code>serial</code> value by 1.</p>
+</li>
+<li>
+<p>Edit <code>/var/named/dynamic/1.0.10.in-addr.arpa</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">$ORIGIN 1.0.10.in-addr.arpa.
+$TTL 300
+@  IN  SOA  dns1.example.com.  hostmaster.example.com. (
+       2001062501  ; serial
+       21600       ; refresh after 6 hours
+       3600        ; retry after 1 hour
+       604800      ; expire after 1 week
+       86400 )     ; minimum TTL of 1 day
+;
+126 IN      PTR      provisioner.openshift.example.com.
+127	IN        	PTR    	openshift-master-0.openshift.example.com.
+128	IN        	PTR    	openshift-master-1.openshift.example.com.
+129	IN 	        PTR   	openshift-master-2.openshift.example.com.
+130	IN 	        PTR   	openshift-worker-0.openshift.example.com.
+131	IN        	PTR    	openshift-worker-1.openshift.example.com.
+132 IN      PTR     api.openshift.example.com.
+133 IN      PTR     ns1.openshift.example.com.</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In this example, the IP addresses 10.0.1.126-133 are pointed to the corresponding fully qualified domain name.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The filename <code>1.0.10.in-addr.arpa</code> is the reverse of the public CIDR example <code>10.0.1.0/24</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Increase the <code>serial</code> value by 1.</p>
+</li>
+<li>
+<p>Enable updates to all dynamic zones and reload them: <code>rndc thaw</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-dns-records-using-dnsmasq-option2_ipi-install-installation-workflow">Creating DNS records using dnsmasq (Option 2)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To create DNS records, open the <code>/etc/hosts</code> file and add the NIC2 (baremetal net) IP followed by the hostname.
+In our example, the domain used is <code>example.com</code> and the cluster name used is <code>openshift</code>.
+Make sure to change these according to your environment specifics.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Edit <code>/etc/hosts</code> and add the NIC2 (baremetal net) IP followed by the hostname.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+&lt;NIC2-IP&gt; provisioner.openshift.example.com provisioner
+&lt;NIC2-IP&gt; openshift-master-0.openshift.example.com openshift-master-0
+&lt;NIC2-IP&gt; openshift-master-1.openshift.example.com openshift-master-1
+&lt;NIC2-IP&gt; openshift-master-2.openshift.example.com openshift-master-2
+&lt;NIC2-IP&gt; openshift-worker-0.openshift.example.com openshift-worker-0
+&lt;NIC2-IP&gt; openshift-worker-1.openshift.example.com openshift-worker-1
+&lt;API-IP&gt;  api.openshift.example.com api
+&lt;DNS-VIP-IP&gt; ns1.openshift.example.com ns1</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open the appropriate <code>firewalld</code> DNS service and reload the rules.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">systemctl restart firewalld
+firewall-cmd --add-service=dns --permanent
+firewall-cmd --reload</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-dhcp-reservations-option1_ipi-install-installation-workflow">Creating DHCP reservations (Option 1)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Use Option 1 if access to the appropriate DHCP server for the baremetal network is accessible or a request
+to your network admin to create the DHCP reservations is an option.
+If this is not an option, skip this section and go to section Create DHCP records using dnsmasq (Option 2).</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Login to the DHCP server using <code>ssh</code>.</p>
+</li>
+<li>
+<p>Edit <code>/etc/dhcp/dhcpd.hosts</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">host provisioner {
+     option host-name "provisioner";
+     hardware ethernet &lt;mac-address-of-NIC2&gt;;
+     option domain-search "openshift.example.com";
+     fixed-address &lt;ip-address-of-NIC2&gt;;
+  }
+host openshift-master-0 {
+     option host-name "openshift-master-0";
+     hardware ethernet &lt;mac-address-of-NIC2&gt;;
+     option domain-search "openshift.example.com";
+     fixed-address &lt;ip-address-of-NIC2&gt;;
+  }
+
+host openshift-master-1 {
+     option host-name "openshift-master-1";
+     hardware ethernet &lt;mac-address-of-NIC2&gt;;
+     option domain-search "openshift.example.com";
+     fixed-address &lt;ip-address-of-NIC2&gt;;
+  }
+
+host openshift-master-2 {
+     option host-name "openshift-master-2";
+     hardware ethernet &lt;mac-address-of-NIC2&gt;;
+     option domain-search "openshift.example.com";
+     fixed-address &lt;ip-address-of-NIC2&gt;;
+  }
+host openshift-worker-0 {
+     option host-name "openshift-worker-0";
+     hardware ethernet &lt;mac-address-of-NIC2&gt;;
+     option domain-search "openshift.example.com";
+     fixed-address &lt;ip-address-of-NIC2&gt;;
+  }
+host openshift-worker-1 {
+     option host-name "openshift-worker-1";
+     hardware ethernet &lt;mac-address-of-NIC2&gt;;
+     option domain-search "openshift.example.com";
+     fixed-address &lt;ip-address-of-NIC2&gt;;
+  }</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Restart the <code>dhcpd</code> service.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">systemctl restart dhcpd</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-dhcp-reservations-using-dnsmasq-option2_ipi-install-installation-workflow">Creating DHCP reservations using dnsmasq (Option 2)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Set up <code>dnsmasq</code> on a server that can access the baremetal network.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Install <code>dnsmasq</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">dnf install -y dnsmasq</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Change to the <code>/etc/dnsmasq.d</code> directory.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cd /etc/dnsmasq.d</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a file that reflects your OpenShift cluster appended by <code>.dns</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">touch &lt;filename&gt;.dns</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Open the appropriate <code>firewalld</code> DHCP service.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">systemctl restart firewalld
+firewall-cmd --add-service=dhcp --permanent
+firewall-cmd --reload</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Here is an example of the <code>.dns</code> file.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">domain-needed
+bind-dynamic
+bogus-priv
+domain=rna1.cloud.lab.eng.bos.redhat.com
+dhcp-range=&lt;baremetal-net-starting-ip,baremetal-net-ending-ip&gt;
+#dhcp-range=10.0.1.4,10.0.14
+dhcp-option=3,&lt;baremetal-net-gateway-ip&gt;
+#dhcp-option=3,10.0.1.254
+resolv-file=/etc/resolv.conf.upstream
+interface=&lt;nic-with-access-to-baremetal-net&gt;
+#interface=em2
+server=&lt;ip-of-existing-server-on-baremetal-net&gt;
+
+
+#Wildcard for apps -- make changes to cluster-name (openshift) and domain (example.com)
+address=/.apps.openshift.example.com/&lt;wildcard-ingress-lb-ip&gt;
+
+#Static IPs for Masters
+dhcp-host=&lt;NIC2-mac-address&gt;,provisioner.openshift.example.com,&lt;ip-of-provisioner&gt;
+dhcp-host=&lt;NIC2-mac-address&gt;,openshift-master-0.openshift.example.com,&lt;ip-of-openshift-master-0&gt;
+dhcp-host=&lt;NIC2-mac-address&gt;,openshift-master-1.openshift.example.com,&lt;ip-of-openshift-master-1&gt;
+dhcp-host=&lt;NIC2-mac-address&gt;,openshift-master-2.openshift.example.com,&lt;ip-of-openshift-master-2&gt;
+dhcp-host=&lt;NIC2-mac-address&gt;,openshift-worker-0.openshift.example.com,&lt;ip-of-openshift-worker-0&gt;
+dhcp-host=&lt;NIC2-mac-address&gt;,openshift-worker-1.openshift.example.com,&lt;ip-of-openshift-worker-1&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the <code>resolv.conf.upstream</code> file to provide DNS fowarding to an existing DNS server for resolution
+to the outside world.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">search &lt;domain.com&gt;
+nameserver &lt;ip-of-my-existing-dns-nameserver&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Restart the <code>dnsmasq</code> service.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">systemctl restart dnsmasq</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify the <code>dnsmasq</code> service is running.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">systemctl status dnsmasq</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="installing-rhel-on-the-provision-node_ipi-install-installation-workflow">Installing RHEL on the provision node</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>With the networking portions complete, the next step in installing the Red Hat OpenShift OCP cluster is to
+install RHEL 8 on the provision node.
+This node will be used as the orchestrator in installing the OCP cluster on the three master and two worker nodes.
+For the purposes of this document, installing RHEL on the provision node is out of scope. However, options include,
+but are not limited to, using a RHEL Satellite server, PXE, or installation media.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="preparing-the-provision-node-for-openshift-install_ipi-install-installation-workflow">Preparing the provision node for {product-title} installation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Perform the following steps to prepare the environment.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Log in to the provision node via <code>ssh</code>.</p>
+</li>
+<li>
+<p>Create a user (for example, <code>kni</code>) to deploy as non-root and provide that user <code>sudo</code> privileges.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[root@provision ~]# useradd kni
+[root@provision ~]# passwd kni
+[root@provision ~]# echo "kni ALL=(root) NOPASSWD:ALL" | tee -a /etc/sudoers.d/kni
+[root@provision ~]# chmod 0440 /etc/sudoers.d/kni</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create an <code>ssh</code> key for the new user.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[root@provision ~]# su - kni -c "ssh-keygen -t rsa -f /home/kni/.ssh/id_rsa -N ''"</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Log in in as the new user on the provision node.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># su - kni</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Use Red Hat Subscription Manager to register your environment.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[kni@provision ~]$ sudo subscription-manager register --username=&lt;user&gt; --password=&lt;pass&gt; --auto-attach
+[kni@provision ~]$ sudo subscription-manager repos --enable=rhel-8-for-x86_64-appstream-rpms --enable=rhel-8-for-x86_64-baseos-rpms</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For more information about Red Hat Subscription Manager, see <a href="https://access.redhat.com/documentation/en-us/red_hat_subscription_management/1/html-single/rhsm/index">Using and Configuring Red Hat Subscription Manager</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Install the following packages.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[kni@provision ~]$ sudo dnf install -y libvirt qemu-kvm mkisofs python3-devel jq ipmitool</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Modify the user to add the <code>libvirt</code> group to the newly created user.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[kni@provision ~]$ sudo usermod --append --groups libvirt &lt;user&gt;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start <code>firewalld</code>, enable the <code>http</code> service, and enable port 5000.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[kni@provision ~]$ sudo systemctl start firewalld
+[kni@provision ~]$ sudo firewall-cmd --zone=public --add-service=http --permanent
+[kni@provision ~]$ sudo firewall-cmd --add-port=5000/tcp --zone=libvirt  --permanent
+[kni@provision ~]$ sudo firewall-cmd --add-port=5000/tcp --zone=public   --permanent
+[kni@provision ~]$ sudo firewall-cmd --reload</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Start and enable the <code>libvirtd</code> service.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[kni@provision ~]$ sudo systemctl start libvirtd
+[kni@provision ~]$ sudo systemctl enable libvirtd --now</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the default storage pool and start it.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[kni@provision ~]$ sudo virsh pool-define-as --name default --type dir --target /var/lib/libvirt/images
+[kni@provision ~]$ sudo virsh pool-start default
+[kni@provision ~]$ sudo virsh pool-autostart default</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure networking.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This step can also be run from the web console.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[kni@provision ~]$ export PUB_CONN=&lt;baremetal_nic_name&gt;
+[kni@provision ~]$ export PROV_CONN=&lt;prov_nic_name&gt;
+[kni@provision ~]$ sudo nohup bash -c '
+    nmcli con down "$PROV_CONN"
+    nmcli con down "$PUB_CONN"
+    nmcli con delete "$PROV_CONN"
+    nmcli con delete "$PUB_CONN"
+    # RHEL 8.1 appends the word "System" in front of the connection, delete in case it exists
+    nmcli con down "System $PUB_CONN"
+    nmcli con delete "System $PUB_CONN"
+    nmcli connection add ifname provisioning type bridge con-name provisioning
+    nmcli con add type bridge-slave ifname "$PROV_CONN" master provisioning
+    nmcli connection add ifname baremetal type bridge con-name baremetal
+    nmcli con add type bridge-slave ifname "$PUB_CONN" master baremetal
+    nmcli con down "$PUB_CONN";pkill dhclient;dhclient baremetal
+    nmcli connection modify provisioning ipv4.addresses 172.22.0.1/24 ipv4.method manual
+    nmcli con down provisioning
+    nmcli con up provisioning
+'</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>ssh</code> connection may disconnect after executing this step.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p><code>ssh</code> back into the provision host (if required).</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># ssh kni@provision</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Verify the connection bridges have been properly created.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[kni@provision ~]$ sudo nmcli con show</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">NAME               UUID                                  TYPE      DEVICE
+baremetal          4d5133a5-8351-4bb9-bfd4-3af264801530  bridge    baremetal
+provisioning       43942805-017f-4d7d-a2c2-7cb3324482ed  bridge    provisioning
+virbr0             d9bca40f-eee1-410b-8879-a2d4bb0465e7  bridge    virbr0
+bridge-slave-eno1  76a8ed50-c7e5-4999-b4f6-6d9014dd0812  ethernet  eno1
+bridge-slave-eno2  f31c3353-54b7-48de-893a-02d2b34c4736  ethernet  eno2</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a <code>pull-secret.txt</code> file.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">[kni@provision ~]$ vim pull-secret.txt</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In a web browser, navigate to <a href="https://cloud.redhat.com/openshift/install/metal/user-provisioned">Install on Bare Metal with user-provisioned infrastructure</a>, and scroll down to the <strong>Downloads</strong> section. Click <strong>Copy pull secret</strong>. Paste the contents into the <code>pull-secret.txt</code> file and save the contents in the <code>kni</code> user&#8217;s home directory.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="retrieving-the-openshift-installer-development_ipi-install-installation-workflow">Retrieving the OpenShift installer (Development)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can choose from the following approaches:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Choose a successfully deployed release that passed CI</p>
+</li>
+<li>
+<p>Deploy the latest development version</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="choosing-an-openshift-installer-release-from-ci-development_ipi-install-installation-workflow">Choosing an OpenShift installer release from CI (Development)</h3>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Go to <a href="https://openshift-release.svc.ci.openshift.org/">Release Status</a> and choose a release
+that has passed the tests for metal.</p>
+</li>
+<li>
+<p>Verify that the release is available in the OpenShift mirror
+<a href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/">Index of /pub/openshift-v4/clients/ocp-dev-preview</a>.</p>
+</li>
+<li>
+<p>Save the release name. For example, <code>4.3.0-0.nightly-2019-12-09-035405</code>.</p>
+</li>
+<li>
+<p>Configure VARS.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export VERSION="4.3.0-0.nightly-2019-12-09-035405"
+export RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/$VERSION/release.txt
+| grep 'Pull From: quay.io' | awk -F ' ' '{print $3}' | xargs)</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="choosing-the-latest-openshift-installer-development_ipi-install-installation-workflow">Choosing the latest OpenShift installer (Development)</h3>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>Configure VARS.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export VERSION=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/release.txt
+| grep 'Name:' | awk -F: '{print $2}')
+export RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/latest/release.txt
+| grep 'Pull From: quay.io' | awk -F ' ' '{print $3}')</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>/ Module included in the following assemblies:</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="extracting-the-installer-development_ipi-install-installation-workflow">Extracting the installer (Development)</h3>
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>After choosing the installer, the next step is to extract it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export cmd=openshift-baremetal-install
+export pullsecret_file=~/pull-secret.txt
+export extract_dir=$(pwd)
+# Get the oc binary
+curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp-dev-preview/$VERSION/openshift-client-linux-$VERSION.tar.gz | tar zxvf - oc
+sudo cp ./oc /usr/local/bin/oc
+sudo cp ./openshift-baremetal-install /usr/local/bin/openshift-baremetal-install
+# Extract the baremetal installer
+oc adm release extract --registry-config "${pullsecret_file}" --command=$cmd --to "${extract_dir}" ${RELEASE_IMAGE}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="retrieving-the-openshift-installer_ipi-install-installation-workflow">Retrieving the {product-title} installer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The latest-4.x (currently, 4.3) can be used to deploy the latest Generally
+Available version of {product-title}:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export VERSION=latest-4.3
+export RELEASE_IMAGE=$(curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/$VERSION/release.txt | grep 'Pull From: quay.io' | awk -F ' ' '{print $3}' | xargs)</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="extracting-the-openshift-installer_ipi-install-installation-workflow">Extracting the {product-title} installer</h3>
+<div class="paragraph">
+<p>After retrieving the installer, the next step is to extract it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">$ export cmd=openshift-baremetal-install
+$ export pullsecret_file=~/pull-secret.txt
+$ export extract_dir=$(pwd)
+# Get the oc binary
+$ curl -s https://mirror.openshift.com/pub/openshift-v4/clients/ocp/$VERSION/openshift-client-linux-$VERSION.tar.gz | tar zxvf - oc
+$ sudo cp ./oc /usr/local/bin/oc
+# Extract the baremetal installer
+$ oc adm release extract --registry-config "${pullsecret_file}" --command=$cmd --to "${extract_dir}" ${RELEASE_IMAGE}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ipi-install-creating-an rhcos-images-cache.adoc_ipi-install-installation-workflow">Creating an RHCOS images cache (Optional)</h3>
+<div class="paragraph">
+<p>To employ image caching, you must download two images: the RHCOS image used by the bootstrap VM and the RHCOS
+image used by the installer to provision the different nodes.
+Image caching is optional, but especially useful when running the installer on a network with limited bandwidth.</p>
+</div>
+<div class="paragraph">
+<p>If you are running the installer on a network with limited bandwidth
+and the RHCOS images download takes more than 15 to 20 minutes, the installer will timeout.
+Caching images on a web server will help in such scenarios.</p>
+</div>
+<div class="paragraph">
+<p>Use the following steps to install a container that contains the images.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># Install podman
+sudo dnf install -y podman
+# Open firewall port 8080 to be used for RHCOS Image caching
+sudo firewall-cmd --add-port=8080/tcp --zone=public --permanent
+# Create a directory to store the bootstraposimage and clusterosimage
+mkdir /home/kni/rhcos_image_cache
+# Set the appropriate SELinux context for the newly created directory
+sudo semanage fcontext -a -t httpd_sys_content_t "/home/kni/rhcos_image_cache(/.*)?"
+sudo restorecon -Rv rhcos_image_cache/
+# Get the commit id from the installer it will be used to determine which images do we need to download
+export COMMIT_ID=$(/home/kni/openshift-baremetal-install version | grep '^built from commit' | awk '{print $4}')
+# Get the uri for the RHCOS image that will be deployed on the nodes
+export RHCOS_OPENSTACK_URI=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json  | jq .images.openstack.path | sed 's/"//g')
+# Get the uri for the RHCOS image that will be deployed on the bootstrap vm
+export RHCOS_QEMU_URI=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json  | jq .images.qemu.path | sed 's/"//g')
+# Get the path where the images are published
+export RHCOS_PATH=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json | jq .baseURI | sed 's/"//g')
+# Get the SHA hash for the RHCOS image that will be deployed on the bootstrap vm
+export RHCOS_QEMU_SHA_UNCOMPRESSED=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json  | jq -r '.images.qemu["uncompressed-sha256"]')
+# Get the SHA hash for the RHCOS image that will be deployed on the nodes
+export RHCOS_OPENSTACK_SHA_COMPRESSED=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json  | jq -r '.images.openstack.sha256')
+# Download the images and place them in the  /home/kni/rhcos_image_cache directory
+curl -L ${RHCOS_PATH}${RHCOS_QEMU_URI} -o /home/kni/rhcos_image_cache
+curl -L ${RHCOS_PATH}${RHCOS_OPENSTACK_URI} -o /home/kni/rhcos_image_cache
+# Confirm SELinux type is of httpd_sys_content_t for the newly created files.
+ls -Z /home/kni/rhcos_image_cache
+# Create pod
+podman run -d --name rhcos_image_cache \
+-v /home/kni/rhcos_image_cache:/var/www/html \
+-p 8080:8080/tcp \
+registry.centos.org/centos/httpd-24-centos7:latest</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>#include::modules/ipi-install-creating-a-disconnected-registry.adoc[leveloffset=+1]</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuring-the-install-config-file_ipi-install-installation-workflow">Configuring the <code>install-config</code> file</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The <code>install-config.yaml</code> file requires some additional details.
+Most of the information is teaching the installer and the resulting cluster enough about the available hardware so that it is able to fully manage it.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Configure <code>install-config.yaml</code>. Change the appropriate variables to match your environment, including <code>pullSecret</code> and <code>sshKey</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">apiVersion: v1
+baseDomain: &lt;domain&gt;
+metadata:
+  name: &lt;cluster-name&gt;
+networking:
+  machineCIDR: &lt;public-cidr&gt;
+  networkType: OVNKubernetes
+compute:
+- name: worker
+  replicas: 2
+controlPlane:
+  name: master
+  replicas: 3
+  platform:
+    baremetal: {}
+platform:
+  baremetal:
+    apiVIP: &lt;api-ip&gt;
+    ingressVIP: &lt;wildcard-ip&gt;
+    dnsVIP: &lt;dns-ip&gt;
+    provisioningBridge: provisioning
+    externalBridge: baremetal
+    hosts:
+      - name: openshift-master-0
+        role: master
+        bmc:
+          address: ipmi://&lt;out-of-band-ip&gt;
+          username: &lt;user&gt;
+          password: &lt;password&gt;
+        bootMACAddress: &lt;NIC1-mac-address&gt;
+        hardwareProfile: default
+      - name: openshift-master-1
+        role: master
+        bmc:
+          address: ipmi://&lt;out-of-band-ip&gt;
+          username: &lt;user&gt;
+          password: &lt;password&gt;
+        bootMACAddress: &lt;NIC1-mac-address&gt;
+        hardwareProfile: default
+      - name: openshift-master-2
+        role: master
+        bmc:
+          address: ipmi://&lt;out-of-band-ip&gt;
+          username: &lt;user&gt;
+          password: &lt;password&gt;
+        bootMACAddress: &lt;NIC1-mac-address&gt;
+        hardwareProfile: default
+      - name: openshift-worker-0
+        role: worker
+        bmc:
+          address: ipmi://&lt;out-of-band-ip&gt;
+          username: &lt;user&gt;
+          password: &lt;password&gt;
+        bootMACAddress: &lt;NIC1-mac-address&gt;
+        hardwareProfile: unknown
+      - name: openshift-worker-1
+        role: worker
+        bmc:
+          address: ipmi://&lt;out-of-band-ip&gt;
+          username: &lt;user&gt;
+          password: &lt;password&gt;
+        bootMACAddress: &lt;NIC1-mac-address&gt;
+        hardwareProfile: unknown
+pullSecret: '&lt;pull_secret&gt;'
+sshKey: '&lt;ssh_pub_key&gt;'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create a directory to store cluster configs.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># mkdir ~/clusterconfigs
+# cp install-config.yaml ~/clusterconfigs</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ensure all bare metal nodes are powered off prior to installing the {product-title} cluster.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># ipmitool -I lanplus -U &lt;user&gt; -P &lt;password&gt; -H &lt;management-server-ip&gt; power off</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Ensure that old bootstrap resources are removed, if any are left over from a previous deployment attempt.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">for i in $(sudo virsh list | tail -n +3 | grep bootstrap | awk {'print $2'});
+do
+  sudo virsh destroy $i;
+  sudo virsh undefine $i;
+  sudo virsh vol-delete $i --pool default;
+  sudo virsh vol-delete $i.ign --pool default;
+done</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configuring-the-metal3-config-file_ipi-install-installation-workflow">Configuring the <code>metal3-config</code> file ({product-title} 4.3 only)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you are you working in {product-title} 4.3, you must create the <code>ConfigMap metal3-config.yaml.sample</code> file.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create <code>ConfigMap metal3-config.yaml.sample</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: metal3-config
+  namespace: openshift-machine-api
+data:
+  cache_url: ''
+  deploy_kernel_url: http://&lt;provisioning_ip&gt;:6180/images/ironic-python-agent.kernel
+  deploy_ramdisk_url: http://&lt;provisioning_ip&gt;:6180/images/ironic-python-agent.initramfs
+  dhcp_range: 172.22.0.10,172.22.0.100
+  http_port: "6180"
+  ironic_endpoint: http://&lt;provisioning_ip&gt;:6385/v1/
+  ironic_inspector_endpoint: http://172.22.0.3:5050/v1/
+  provisioning_interface: &lt;NIC1&gt;
+  provisioning_ip: &lt;provisioning_ip&gt;/24
+  rhcos_image_url: ${RHCOS_PATH}${RHCOS_URI}</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>provisioning_ip</code> should be modified to an available IP on the <code>provisioning</code> network. The default is <code>172.22.0.3</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Create the final ConfigMap.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">export COMMIT_ID=$(./openshift-baremetal-install version | grep '^built from commit' | awk '{print $4}')
+export RHCOS_URI=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json | jq .images.openstack.path | sed 's/"//g')
+export RHCOS_PATH=$(curl -s -S https://raw.githubusercontent.com/openshift/installer/$COMMIT_ID/data/data/rhcos.json | jq .baseURI | sed 's/"//g')
+envsubst &lt; metal3-config.yaml.sample &gt; metal3-config.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-the-openshift-manifests_ipi-install-installation-workflow">Creating the {product-title} manifests</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Create the {product-title} manifests.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># ./openshift-baremetal-install --dir ~/clusterconfigs create manifests</pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">INFO Consuming Install Config from target directory
+WARNING Making control-plane schedulable by setting MastersSchedulable to true for Scheduler cluster settings
+WARNING Discarding the Openshift Manifests that was provided in the target directory because its dependencies are dirty and it needs to be regenerated</pre>
+</div>
+</div>
+</li>
+<li>
+<p>If you are you working in {product-title} 4.3 and you created the <code>metal3-config.yaml</code> file, copy the
+file to the <code>clusterconfigs/openshift</code> directory.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># cp ~/metal3-config.yaml clusterconfigs/openshift/99_metal3-config.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="additional-install-config-parameters_ipi-install-installation-workflow">Additional <code>install-config</code> parameters</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This topic describes the required parameters, the <code>hosts</code> parameter, and the <code>bmc</code> <code>address</code> parameter
+for the <code>install-config.yaml</code> file.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<caption class="title">Table 1. Required parameters</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parameters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>provisioningNetworkInterface</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the network interface on control plane nodes connected to the
+provisioning network. ({product-title} 4.4 only)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hosts</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Details about bare metal hosts to use to build the cluster.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>defaultMachinePlatform</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The default configuration used for machine pools without a platform configuration.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>apiVIP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>api.&lt;clusterdomain&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The VIP to use for internal API communication.</p>
+<p class="tableblock">This setting must either be provided or pre-configured in DNS so that the
+default name resolve correctly.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ingressVIP</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>test.apps.&lt;clusterdomain&gt;</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The VIP to use for ingress traffic.</p>
+<p class="tableblock">This setting must either be provided or pre-configured in DNS so that the
+default name resolve correctly.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dnsVIP</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The VIP to use for internal DNS communication.</p>
+<p class="tableblock">This setting has no default and must always be provided.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<div class="title">Hosts</div>
+<p>The <code>hosts</code> parameter is a list of separate bare metal assets that should be used to build the cluster.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>name</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The name of the <code>BareMetalHost</code> resource to associate with the details.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>role</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either <code>master</code> or <code>worker</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bmc</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Connection details for the baseboard management controller. See below for details.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>bootMACAddress</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The MAC address of the NIC the host will use to boot on the provisioning network.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>bmc</code> parameter for each host is a set of values for accessing the baseboard management controller in the host.</p>
+</div>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Default</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>username</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The username for authenticating to the BMC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>password</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The password associated with <code>username</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>address</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The URL for communicating with the BMC controller, based on the provider being used.
+See BMC Addressing for details.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<div class="title">BMC addressing</div>
+<p>Keep the following in mind when providing values for the <code>bmc</code> <code>address</code> field.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>address</code> field for each <code>bmc</code> entry is a URL with details for connecting to the controller,
+including the type of controller in the URL scheme and its location on the network.</p>
+</li>
+<li>
+<p>IPMI hosts use <code>ipmi://&lt;host&gt;:&lt;port&gt;</code>. An unadorned <code>&lt;host&gt;:&lt;port&gt;</code> is also accepted.
+If the port is omitted, the default of 623 is used.</p>
+</li>
+<li>
+<p>Dell iDRAC hosts use <code>idrac://</code> (or <code>idrac+http://</code> to disable TLS).</p>
+</li>
+<li>
+<p>Fujitsu iRMC hosts use <code>irmc://&lt;host&gt;:&lt;port&gt;</code>, where <code>&lt;port&gt;</code> is optional if using the default.</p>
+</li>
+<li>
+<p>For Redfish, use <code>redfish://</code> (or <code>redfish+http://</code> to disable TLS).
+The hostname (or IP address) and the path to the system ID are both required.
+For example, <code>redfish://myhost.example/redfish/v1/Systems/System.Embedded.1</code>
+or <code>redfish://myhost.example/redfish/v1/Systems/1</code>.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="validation-checklist-for-installation_ipi-install-installation-workflow">Validation checklist for installation</h2>
+<div class="sectionbody">
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-square-o"></i> {product-title} installer has been retrieved.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> {product-title} installer has been extracted.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Required parameters for the <code>install-config.yaml</code> have been configured.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> The <code>hosts</code> parameter for the <code>install-config.yaml</code> has been configured.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> The <code>bmc</code> parameter for the <code>install-config.yaml</code> has been configured.</p>
+</li>
+<li>
+<p><i class="fa fa-square-o"></i> Conventions for the values configured in the <code>bmc</code> <code>address</code> field have been applied.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>/ Module included in the following assemblies:</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deploying-routers-on-worker-nodes_ipi-install-installation-workflow">Deploying routers on worker nodes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>During the installation of an OpenShift cluster, router pods are deployed on worker nodes (the default is two router pods).
+In the event that an installation only has one worker node or additional routers are required in order to handle
+external traffic destined for services within your OpenShift cluster, a <code>yaml</code> file can be created to set
+the appropriate amount of router replicas.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>By default two routers are deployed.
+If you already have two worker nodes you can skip this section.
+For more information on the Ingress Operator see: <a href="https://docs.openshift.com/container-platform/4.2/networking/ingress-operator.html">Ingress Operator in OpenShift Container Platform</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If you have an environment where no workers are deployed and only has master nodes, by default two routers are deployed on
+the master nodes.
+If this is the case, you can skip this section.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Create the <code>router-replicas.yaml</code> file.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: default
+  namespace: openshift-ingress-operator
+spec:
+  replicas: &lt;num-of-router-pods&gt;
+  endpointPublishingStrategy:
+    type: HostNetwork
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/worker: ""</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="literalblock">
+<div class="content">
+<pre class="nowrap">If working with just one worker node, set this value to `1`.
+If working with more than 3+ workers, additional router pods (default 2) may be recommended.</pre>
+</div>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Save and copy the <code>router-replicas.yaml</code> file to the <code>clusterconfigs/openshift</code> directory.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">cp ~/router-replicas.yaml clusterconfigs/openshift/99_router-replicas.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deploying-the-cluster-via-the-openshift-installer-ipi-install-installation-workflow">Deploying the cluster via the {product-title} installer</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Run the {product-title} installer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># ./openshift-baremetal-install --dir ~/clusterconfigs --log-level debug create cluster</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>/ Module included in the following assemblies:</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="backing-up-the-cluster-configuration_ipi-install-installation-workflow">Backing up the cluster configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>At this point you have a working OpenShift 4 cluster on baremetal.
+In order to take advantage of the baremetal hardware that was the provision node,
+you can repurpose the provisioning node as a worker.
+Prior to reprovisioning the node, it is recommended to backup some existing files.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Tar the <code>clusterconfig</code> folder and download it to your local machine.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">tar cvfz clusterconfig.tar.gz ~/clusterconfig</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copy the Private part for the SSH Key configured on the <code>install-config.yaml</code> file to your local machine.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">tar cvfz clusterconfigsh.tar.gz ~/.ssh/id_rsa*</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Copy the <code>install-config.yaml</code> and <code>metal3-config.yaml</code> files.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">tar cvfz yamlconfigs.tar.gz install-config.yaml metal3-config.yaml</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="preparing-the-provisioner-node-to-be-deployed-as-a-worker-node_ipi-install-installation-workflow">Preparing the provisioner node to be deployed as a worker node</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>Perform the following steps prior to converting the provisioner node to a worker node.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>ssh</code> to a system (for example, a laptop) that can access the out of band management network of the current provisioner node.</p>
+</li>
+<li>
+<p>Copy the backups <code>clusterconfig.tar.gz</code>, <code>clusterconfigsh.tar.gz</code>, and <code>amlconfigs.tar.gz</code> to the new system.</p>
+</li>
+<li>
+<p>Copy the <code>oc</code> binary from the existing provisioning node to the new system.</p>
+</li>
+<li>
+<p>Make a note of the mac addresses, the baremetal network IP used for the provisioner node, and the IP address of
+the Out of band Management Network.</p>
+</li>
+<li>
+<p>Reboot the system and ensure that PXE is enabled on the provisioning network and PXE is disabled for all other NICs.</p>
+</li>
+<li>
+<p>If installation was performed using a Satellite server, remove the Host entry for the existing provisioning node.</p>
+</li>
+<li>
+<p>Install the <code>ipmitool</code> on the new system in order to power off the provisioner node.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="appending-dns-records-for-the worker-2-(old provisioner)-on-a-DNS-server-option1_ipi-install-installation-workflow">Appending DNS records for the worker-2 (old provisioner) on a DNS server (Option 1)</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Login to the DNS server using <code>ssh</code>.</p>
+</li>
+<li>
+<p>Suspend updates to all dynamic zones: <code>rndc freeze</code>.</p>
+</li>
+<li>
+<p>Edit <code>/var/named/dynamic/example.com</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">$ORIGIN openshift.example.com.
+&lt;OUTPUT_OMITTED&gt;
+openshift-worker-1      A       &lt;ip-of-worker-1&gt;
+openshift-worker-2      A       &lt;ip-of-worker-2&gt;</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Remove the provisioner as it is replaced by openshift-worker-2.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Increase the SERIAL value by <code>1</code>.</p>
+</li>
+<li>
+<p>Edit <code>/var/named/dynamic/1.0.10.in-addr.arpa</code>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The filename <code>1.0.10.in-addr.arpa</code> is the reverse of the public CIDR example <code>10.0.1.0/24</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Increase the SERIAL value by <code>1</code>.</p>
+</li>
+<li>
+<p>Enable updates to all dynamic zones and reload them: <code>rndc thaw</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="appending-dns-records-for-the worker-2-(old provisioner)-using-dnsmasq-option2_ipi-install-installation-workflow">Appending DNS records for the worker-2 (old provisioner) using dnsmasq (Option 2)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<div class="title">Procedure</div>
+<p>Append the following DNS record to the <code>/etc/hosts</code> file on the server hosting the <code>dnsmasq</code> service.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">&lt;OUTPUT_OMITTED&gt;
+&lt;NIC2-IP&gt; openshift-worker-1.openshift.example.com openshift-worker-1
+&lt;NIC2-IP&gt; openshift-worker-2.openshift.example.com openshift-worker-2</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Remove the <code>provisioner.openshift.example.com</code> entry as it is replaced by worker-2</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-dhcp-reservations-for-the worker-2-(old provisioner)-on-a-DHCP-server-option1_ipi-install-installation-workflow">Creating DHCP reservations for the worker-2 (old provisioner) on a DHCP server (Option 1)</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Login to the DHCP server using <code>ssh</code>.</p>
+</li>
+<li>
+<p>Edit <code>/etc/dhcp/dhcpd.hosts</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">host openshift-worker-2 {
+     option host-name "worker-2";
+     hardware ethernet &lt;NIC2-mac-address&gt;;
+     option domain-search "openshift.example.com";
+     fixed-address &lt;ip-address-of-NIC2&gt;;
+  }</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Remove the provisioner as it is replaced by openshift-worker-2.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Restart the <code>dhcpd</code> service.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">systemctl restart dhcpd</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="creating-dhcp-reservations-for-the worker-2-(old provisioner)-using-dnsmasq-option2_ipi-install-installation-workflow">Creating DHCP reservations for the worker-2 (old provisioner) using dnsmasq (Option 2)</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Append the following DHCP reservation to the <code>/etc/dnsmasq.d/example.dns</code> file on the server hosting the <code>dnsmasq</code> service.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">&lt;OUTPUT_OMITTED&gt;
+dhcp-host=&lt;NIC2-mac-address&gt;,openshift-worker-1.openshift.example.com,&lt;ip-of-worker-1&gt;
+dhcp-host=&lt;NIC2-mac-address&gt;,openshift-worker-2.openshift.example.com,&lt;ip-of-worker-2&gt;</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Remove the <code>provisioner.openshift.example.com</code> entry as it is replaced by worker-2</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Restart the <code>dnsmasq</code> service.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">systemctl restart dnsmasq</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>/ Module included in the following assemblies:</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deploying-the-provisioner-node-as-a-worker-node-using-metal3_ipi-install-installation-workflow">Deploying the provisioner node as a worker node using Metal3</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After you have completed the prerequisites, perform the deployment process.</p>
+</div>
+<div class="olist arabic">
+<div class="title">Procedure</div>
+<ol class="arabic">
+<li>
+<p>Power off the node using <code>ipmitool</code> and confirm the provisioning node is powered off.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">ssh &lt;server-with-access-to-management-net&gt;
+# Use the user, password and Management net IP adddress to shutdown the system
+ipmitool -I lanplus -U &lt;user&gt; -P &lt;password&gt; -H &lt;management-server-ip&gt; power off
+# Confirm the server is powered down
+ipmitool -I lanplus -U &lt;user&gt; -P &lt;password&gt; -H &lt;management-server-ip&gt; power status
+Chassis Power is off</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Get <code>base64</code> strings for the Out of band Management credentials. In this example, the user is <code>root</code> and the password is <code>calvin</code>.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap"># Use echo -ne, otherwise you will get your secrets with \n which will cause issues
+# Get root username in base64
+echo -ne "root" | base64
+# Get root password in base64
+echo -ne "calvin" | base64</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Configure the BaremetalHost <code>bmh.yaml</code> file.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: openshift-worker-2-bmc-secret
+type: Opaque
+data:
+  username: ca2vdAo=
+  password: MWAwTWdtdC0K
+---
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: openshift-worker-2
+spec:
+  online: true
+  bootMACAddress: &lt;NIC1-mac-address&gt;
+  bmc:
+    address: ipmi://&lt;out-of-band-ip&gt;
+    credentialsName: openshift-worker-2-bmc-secret</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Create the BaremetalHost.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./oc -n openshift-machine-api create -f bmh.yaml
+secret/openshift-worker-2-bmc-secret created
+baremetalhost.metal3.io/openshift-worker-2 created</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Power up and inspect the node.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./oc -n openshift-machine-api get bmh openshift-worker-2
+
+NAME                 STATUS   PROVISIONING STATUS   CONSUMER   BMC                 HARDWARE PROFILE   ONLINE   ERROR
+openshift-worker-2   OK       inspecting                       ipmi://&lt;out-of-band-ip&gt;                      true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>After finishing the inspection, the node is ready to be provisioned.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./oc -n openshift-machine-api get bmh openshift-worker-2
+
+NAME                 STATUS   PROVISIONING STATUS   CONSUMER   BMC                 HARDWARE PROFILE   ONLINE   ERROR
+openshift-worker-2   OK       ready                            ipmi://&lt;out-of-band-ip&gt;   unknown            true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Scale the workers machineset. Previously, there were two replicas during original installation.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">./oc get machineset -n openshift-machine-api
+NAME            DESIRED   CURRENT   READY   AVAILABLE   AGE
+openshift-worker-2   0         0                             21h
+
+./oc -n openshift-machine-api scale machineset openshift-worker-2 --replicas=3</pre>
+</div>
+</div>
+</li>
+<li>
+<p>The baremetal host moves to provisioning status. This can take as long as 30 minutes. You can follow the status
+from the node console.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc -n openshift-machine-api get bmh openshift-worker-2
+
+NAME                 STATUS   PROVISIONING STATUS   CONSUMER                  BMC                 HARDWARE PROFILE   ONLINE   ERROR
+openshift-worker-2   OK       provisioning          openshift-worker-0-65tjz   ipmi://&lt;out-of-band-ip&gt;   unknown            true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>When the node is provisioned it moves to provisioned status.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc -n openshift-machine-api get bmh openshift-worker-2
+
+NAME                 STATUS   PROVISIONING STATUS   CONSUMER                  BMC                 HARDWARE PROFILE   ONLINE   ERROR
+openshift-worker-2   OK       provisioned           openshift-worker-2-65tjz   ipmi://&lt;out-of-band-ip&gt;   unknown            true</pre>
+</div>
+</div>
+</li>
+<li>
+<p>When the <code>kubelet</code> finishes initialization the node is ready for use.
+You can connect to the node and run <code>journalctl -fu kubelet</code> to check the process.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="nowrap">oc get node
+NAME                                            STATUS   ROLES           AGE     VERSION
+openshift-master-0.openshift.example.com        Ready    master          30h     v1.16.2
+openshift-master-1.openshift.example.com        Ready    master          30h     v1.16.2
+openshift-master-2.openshift.example.com        Ready    master          30h     v1.16.2
+openshift-worker-0.openshift.example.com        Ready    worker          3m27s   v1.16.2
+openshift-worker-1.openshift.example.com        Ready    worker          3m27s   v1.16.2
+openshift-worker-2.openshift.example.com        Ready    worker          3m27s   v1.16.2</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2020-04-21 15:04:12 CDT
+</div>
+</div>
+</body>
+</html>
